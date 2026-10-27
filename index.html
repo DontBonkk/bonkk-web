@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BONKK® | Don't Bonk. Fuel The Ride.</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Syne & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        neon: '#CCFF00', // Neon Lime / High-Vis Yellow from BONKK image
+                        'neon-dark': '#B3E600',
+                        brandBlack: '#0D0D0D',
+                        brandGray: '#1A1A1A',
+                        cardGray: '#242424'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Syne', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom aesthetics and animations */
+        body {
+            background-color: #0D0D0D;
+            color: #FFFFFF;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .font-brand {
+            font-family: 'Syne', sans-serif;
+            letter-spacing: -0.04em;
+        }
+
+        /* High-visibility neon glow effect */
+        .neon-glow {
+            box-shadow: 0 0 25px rgba(204, 255, 0, 0.4);
+        }
+
+        .neon-text-glow {
+            text-shadow: 0 0 12px rgba(204, 255, 0, 0.6);
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0D0D0D;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #CCFF00;
+            border-radius: 4px;
+        }
+
+        .grid-pattern {
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        }
+
+        /* Gel packet mock up shapes */
+        .gel-sachet {
+            clip-path: polygon(15% 0%, 85% 0%, 100% 12%, 100% 100%, 0 100%, 0 12%);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .gel-sachet:hover {
+            transform: translateY(-8px) rotate(-1deg);
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-neon selection:text-brandBlack">
+
+    <!-- TOP ANNOUNCEMENT BAR -->
+    <div class="bg-neon text-brandBlack font-black text-xs md:text-sm py-2 px-4 text-center tracking-widest uppercase overflow-hidden whitespace-nowrap">
+        <div class="inline-block animate-pulse">
+            ⚡ PRE-ORDER BONKK® GEL MATRIX — 100% DUAL CARB RATIO (1:0.8) — LOTE LIMITADO DISPONIBLE ⚡
+        </div>
+    </div>
+
+    <!-- NAVBAR -->
+    <nav class="sticky top-0 z-40 bg-brandBlack/90 backdrop-blur-md border-b border-white/10 px-4 lg:px-12 py-4 flex justify-between items-center">
+        <a href="#" class="flex items-center gap-2 group">
+            <span class="font-brand font-black text-3xl md:text-4xl tracking-tighter text-neon group-hover:scale-105 transition-transform">
+                BONKK<span class="text-white">.</span>
+            </span>
+        </a>
+
+        <div class="hidden md:flex items-center space-x-8 font-bold text-sm tracking-wider uppercase">
+            <a href="#catalog" class="hover:text-neon transition-colors">Geles</a>
+            <a href="#calculator" class="hover:text-neon transition-colors flex items-center gap-1">
+                <i class="fa-solid font-black text-neon fa-calculator"></i> Calculadora
+            </a>
+            <a href="#science" class="hover:text-neon transition-colors">La Ciencia</a>
+            <a href="#community" class="hover:text-neon transition-colors">Comunidad</a>
+        </div>
+
+        <div class="flex items-center space-x-4">
+            <button onclick="toggleCartDrawer()" class="relative bg-brandGray border border-white/20 hover:border-neon text-white p-2.5 px-4 rounded-full flex items-center gap-2 transition-all hover:bg-neon hover:text-brandBlack font-bold text-sm">
+                <i class="fa-solid fa-cart-shopping text-base"></i>
+                <span class="hidden sm:inline">CARRITO</span>
+                <span id="cart-count" class="bg-neon text-brandBlack group-hover:bg-brandBlack group-hover:text-white font-black text-xs px-2 py-0.5 rounded-full">0</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="relative min-h-[88vh] flex items-center justify-center grid-pattern border-b border-white/10 overflow-hidden px-4 py-16">
+        <!-- Background Neon Glow Blob -->
+        <div class="absolute -top-32 -left-32 w-96 h-96 bg-neon/20 rounded-full blur-[120px] pointer-events-none"></div>
+        <div class="absolute -bottom-32 -right-32 w-96 h-96 bg-neon/20 rounded-full blur-[120px] pointer-events-none"></div>
+
+        <div class="max-w-6xl mx-auto text-center z-10">
+            <!-- Brand Badge -->
+            <div class="inline-flex items-center gap-2 bg-brandGray border border-neon/40 px-4 py-1.5 rounded-full mb-8">
+                <span class="w-2.5 h-2.5 rounded-full bg-neon animate-ping"></span>
+                <span class="text-xs md:text-sm font-extrabold uppercase tracking-widest text-neon">NUTRITION FOR ENDURANCE CYCLING</span>
+            </div>
+
+            <!-- Big Main Headline -->
+            <h1 class="font-brand font-black text-5xl sm:text-7xl md:text-8xl lg:text-9xl tracking-tighter uppercase leading-[0.85] mb-6">
+                DON'T <span class="text-neon neon-text-glow">BONK.</span><br>
+                FUEL THE RIDE.
+            </h1>
+
+            <p class="max-w-2xl mx-auto text-gray-300 text-lg md:text-xl font-medium mb-10 leading-relaxed">
+                Formulado científicamente con una relación 1:0.8 de Maltodextrina y Fructosa. 45g de carbohidratos digestivos para aplastar tus entrenamientos sin colapsos energéticos.
+            </p>
+
+            <!-- Action Buttons -->
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 max-w-md mx-auto">
+                <a href="#catalog" class="w-full sm:w-auto bg-neon text-brandBlack font-black tracking-wider uppercase text-base px-8 py-4 rounded-xl hover:bg-neon-dark transition-all transform hover:scale-105 neon-glow text-center">
+                    Comprar Geles <i class="fa-solid fa-arrow-right ml-2"></i>
+                </a>
+                <a href="#calculator" class="w-full sm:w-auto bg-brandGray border border-white/20 hover:border-neon text-white font-bold tracking-wider uppercase text-base px-8 py-4 rounded-xl hover:bg-cardGray transition-all text-center">
+                    Calcular mi Nutrición
+                </a>
+            </div>
+
+            <!-- Specs Bar -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto mt-16 pt-8 border-t border-white/10 text-left">
+                <div class="p-4 bg-brandGray/50 rounded-xl border border-white/5">
+                    <p class="text-neon font-black text-2xl md:text-3xl font-brand">45G</p>
+                    <p class="text-xs uppercase text-gray-400 font-bold tracking-wider">Carbohidratos / Gel</p>
+                </div>
+                <div class="p-4 bg-brandGray/50 rounded-xl border border-white/5">
+                    <p class="text-neon font-black text-2xl md:text-3xl font-brand">1:0.8</p>
+                    <p class="text-xs uppercase text-gray-400 font-bold tracking-wider">Maltodextrina : Fructosa</p>
+                </div>
+                <div class="p-4 bg-brandGray/50 rounded-xl border border-white/5">
+                    <p class="text-neon font-black text-2xl md:text-3xl font-brand">200MG</p>
+                    <p class="text-xs uppercase text-gray-400 font-bold tracking-wider">Sodio por toma</p>
+                </div>
+                <div class="p-4 bg-brandGray/50 rounded-xl border border-white/5">
+                    <p class="text-neon font-black text-2xl md:text-3xl font-brand">HYDROGEL</p>
+                    <p class="text-xs uppercase text-gray-400 font-bold tracking-wider">Digestión rápida sin agua</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRODUCT CATALOG / FLAVORS SHOWCASE -->
+    <section id="catalog" class="py-20 px-4 lg:px-12 max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+            <span class="text-neon font-bold uppercase tracking-widest text-sm">Geles de Alta Densidad Energética</span>
+            <h2 class="font-brand font-black text-4xl md:text-6xl uppercase tracking-tight mt-2">SELECCIONA TU FUEL</h2>
+            <p class="text-gray-400 max-w-xl mx-auto mt-3">Textura suave, sin saborizante empalagoso, formulados para alta intensidad en ruta y montaña.</p>
+        </div>
+
+        <!-- Catalog Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8" id="products-grid">
+            <!-- Products rendered dynamically via JavaScript -->
+        </div>
+    </section>
+
+    <!-- INTERACTIVE FUEL CALCULATOR -->
+    <section id="calculator" class="py-20 px-4 bg-brandGray border-y border-white/10 relative overflow-hidden">
+        <div class="max-w-5xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <div class="lg:col-span-5">
+                    <span class="bg-neon text-brandBlack px-3 py-1 font-black text-xs tracking-widest uppercase rounded">Herramienta Interactiva</span>
+                    <h2 class="font-brand font-black text-4xl md:text-5xl uppercase tracking-tight mt-4">CALCULADORA DE NUTRIMENTO</h2>
+                    <p class="text-gray-300 mt-4 leading-relaxed">
+                        Evita la pálida o la deshidratación ("bonking"). Calcula exactamente la cantidad de gramos de carbohidratos y cuántos sobres BONKK® necesitas para la ruta.
+                    </p>
+                    <ul class="mt-6 space-y-3 text-sm text-gray-400 font-semibold">
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-neon"></i> Basado en requerimientos fisiológicos reales</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-neon"></i> Previene molestias estomacales</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-neon"></i> Optimizado para rutas > 2 horas</li>
+                    </ul>
+                </div>
+
+                <!-- Calculator Form Card -->
+                <div class="lg:col-span-7 bg-brandBlack p-6 sm:p-8 rounded-3xl border border-neon/30 neon-glow">
+                    <h3 class="font-brand font-black text-2xl uppercase text-neon mb-6 flex items-center gap-2">
+                        <i class="fa-solid fa-sliders"></i> Parámetros de tu Salida
+                    </h3>
+
+                    <div class="space-y-6">
+                        <!-- Duration Slider -->
+                        <div>
+                            <div class="flex justify-between items-center mb-2">
+                                <label class="font-bold text-sm uppercase tracking-wider">Duración de la Ruta</label>
+                                <span id="calc-duration-val" class="font-brand font-black text-neon text-xl">3.0 hrs</span>
+                            </div>
+                            <input type="range" id="calc-duration" min="1" max="8" step="0.5" value="3" class="w-full accent-neon bg-cardGray h-2 rounded-lg cursor-pointer">
+                        </div>
+
+                        <!-- Intensity Selector -->
+                        <div>
+                            <label class="block font-bold text-sm uppercase tracking-wider mb-2">Intensidad / Ritmo</label>
+                            <div class="grid grid-cols-3 gap-2">
+                                <button type="button" onclick="setIntensity('low')" id="btn-int-low" class="intensity-btn py-3 px-2 text-xs font-bold uppercase rounded-xl border border-white/20 bg-cardGray hover:border-neon transition-all">
+                                    Z2 / Base<br><span class="text-[10px] text-gray-400 font-normal">45g carb/h</span>
+                                </button>
+                                <button type="button" onclick="setIntensity('med')" id="btn-int-med" class="intensity-btn py-3 px-2 text-xs font-bold uppercase rounded-xl border-2 border-neon bg-neon/10 text-neon transition-all">
+                                    Tempo / Fondo<br><span class="text-[10px] text-gray-300 font-normal">60g-75g carb/h</span>
+                                </button>
+                                <button type="button" onclick="setIntensity('high')" id="btn-int-high" class="intensity-btn py-3 px-2 text-xs font-bold uppercase rounded-xl border border-white/20 bg-cardGray hover:border-neon transition-all">
+                                    Race / Criterium<br><span class="text-[10px] text-gray-400 font-normal">90g carb/h</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Result Box -->
+                        <div class="bg-cardGray p-6 rounded-2xl border border-white/10 text-center">
+                            <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Recomendación BONKK® Total</p>
+                            <div class="flex justify-center items-baseline gap-2">
+                                <span id="calc-gels-needed" class="font-brand font-black text-5xl md:text-6xl text-neon">4</span>
+                                <span class="font-brand font-black text-xl uppercase">GELES BONKK</span>
+                            </div>
+                            <p id="calc-carbs-total" class="text-sm font-semibold text-gray-300 mt-2">~ 180g de Carbohidratos Totales en ruta</p>
+                        </div>
+
+                        <button onclick="addCalculatedToCart()" class="w-full bg-neon text-brandBlack font-black uppercase py-4 rounded-xl hover:bg-neon-dark transition-all tracking-wider text-sm">
+                            Añadir Dosis Recomendada al Carrito
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SCIENCE & BENEFITS -->
+    <section id="science" class="py-20 px-4 lg:px-12 max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+            <span class="text-neon font-bold uppercase tracking-widest text-sm">Formulación de Alto Rendimiento</span>
+            <h2 class="font-brand font-black text-4xl md:text-6xl uppercase tracking-tight mt-2">POR QUÉ BONKK® ES DIFERENTE</h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="bg-brandGray p-8 rounded-3xl border border-white/10 hover:border-neon/50 transition-all">
+                <div class="w-14 h-14 rounded-2xl bg-neon/10 border border-neon flex items-center justify-center text-neon font-black text-2xl mb-6">
+                    <i class="fa-solid fa-bolt"></i>
+                </div>
+                <h3 class="font-brand font-bold text-2xl uppercase mb-3">Ratio Dual Carbohydrate</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">
+                    Combina Maltodextrina y Fructosa en proporción 1:0.8. Maximiza la absorción intestinal utilizando los transportadores SGLT1 y GLUT5 simultáneamente.
+                </p>
+            </div>
+
+            <div class="bg-brandGray p-8 rounded-3xl border border-white/10 hover:border-neon/50 transition-all">
+                <div class="w-14 h-14 rounded-2xl bg-neon/10 border border-neon flex items-center justify-center text-neon font-black text-2xl mb-6">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <h3 class="font-brand font-bold text-2xl uppercase mb-3">Hydrogel Stomach Protection</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">
+                    Crea una matriz que encapsula los carbohidratos, permitiendo un transporte fluido del estómago al intestino sin generar picos de acidez ni malestar gástrico.
+                </p>
+            </div>
+
+            <div class="bg-brandGray p-8 rounded-3xl border border-white/10 hover:border-neon/50 transition-all">
+                <div class="w-14 h-14 rounded-2xl bg-neon/10 border border-neon flex items-center justify-center text-neon font-black text-2xl mb-6">
+                    <i class="fa-solid fa-droplet"></i>
+                </div>
+                <h3 class="font-brand font-bold text-2xl uppercase mb-3">Electrolitos Esenciales</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">
+                    200mg de Sodio por gel para reponer las sales perdidas a través del sudor en climas cálidos y entrenamientos exigentes.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- INSTAGRAM / COMMUNITY SECTION -->
+    <section id="community" class="py-20 px-4 bg-brandGray/30 border-t border-white/10">
+        <div class="max-w-7xl mx-auto text-center">
+            <div class="inline-flex items-center gap-2 text-neon mb-4">
+                <i class="fa-brands fa-instagram text-2xl"></i>
+                <span class="font-bold tracking-widest uppercase text-sm">@dont_bonkk</span>
+            </div>
+            <h2 class="font-brand font-black text-4xl md:text-6xl uppercase tracking-tight mb-4">ÚNETE A LA COMUNIDAD</h2>
+            <p class="text-gray-400 max-w-xl mx-auto mb-12">Etiquétanos en tus salidas usando <span class="text-white font-bold">#DONTBONK</span> para aparecer en nuestro muro oficial.</p>
+
+            <!-- Instagram Grid Mockup -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <a href="https://www.instagram.com/dont_bonkk/?hl=es" target="_blank" class="group relative aspect-square bg-cardGray rounded-2xl overflow-hidden border border-white/10">
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" style="background-image: url('https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=600&q=80')"></div>
+                    <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center p-4">
+                        <span class="text-neon font-bold text-sm tracking-wider uppercase"><i class="fa-brands fa-instagram"></i> Ver Publicación</span>
+                    </div>
+                </a>
+
+                <a href="https://www.instagram.com/dont_bonkk/?hl=es" target="_blank" class="group relative aspect-square bg-cardGray rounded-2xl overflow-hidden border border-white/10">
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" style="background-image: url('https://images.unsplash.com/photo-1517649763962-0c6232661a0b?auto=format&fit=crop&w=600&q=80')"></div>
+                    <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center p-4">
+                        <span class="text-neon font-bold text-sm tracking-wider uppercase"><i class="fa-brands fa-instagram"></i> Ver Publicación</span>
+                    </div>
+                </a>
+
+                <a href="https://www.instagram.com/dont_bonkk/?hl=es" target="_blank" class="group relative aspect-square bg-cardGray rounded-2xl overflow-hidden border border-white/10">
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" style="background-image: url('https://images.unsplash.com/photo-1485965120184-e220f721d03e?auto=format&fit=crop&w=600&q=80')"></div>
+                    <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center p-4">
+                        <span class="text-neon font-bold text-sm tracking-wider uppercase"><i class="fa-brands fa-instagram"></i> Ver Publicación</span>
+                    </div>
+                </a>
+
+                <a href="https://www.instagram.com/dont_bonkk/?hl=es" target="_blank" class="group relative aspect-square bg-cardGray rounded-2xl overflow-hidden border border-white/10">
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" style="background-image: url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80')"></div>
+                    <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center p-4">
+                        <span class="text-neon font-bold text-sm tracking-wider uppercase"><i class="fa-brands fa-instagram"></i> Ver Publicación</span>
+                    </div>
+                </a>
+            </div>
+
+            <a href="https://www.instagram.com/dont_bonkk/?hl=es" target="_blank" class="inline-flex items-center gap-2 bg-brandGray border border-neon/50 text-neon font-bold px-8 py-3 rounded-xl mt-8 hover:bg-neon hover:text-brandBlack transition-all">
+                <i class="fa-brands fa-instagram"></i> SÍGUENOS EN INSTAGRAM
+            </a>
+        </div>
+    </section>
+
+    <!-- NEWSLETTER / COMING SOON LAUNCH -->
+    <section class="py-20 px-4 bg-neon text-brandBlack text-center relative overflow-hidden">
+        <div class="max-w-4xl mx-auto relative z-10">
+            <span class="font-black uppercase tracking-widest text-xs bg-brandBlack text-neon px-3 py-1 rounded-full">Drop Exclusivo</span>
+            <h2 class="font-brand font-black text-5xl md:text-7xl uppercase tracking-tighter mt-4 mb-2">SOMETHING IS COMING.</h2>
+            <p class="font-bold text-lg md:text-xl max-w-xl mx-auto mb-8 text-brandBlack/80">Suscríbete para acceso anticipado al próximo lanzamiento de BONKK® y código de 15% DTO.</p>
+
+            <form onsubmit="handleNewsletterSubmit(event)" class="flex flex-col sm:flex-row gap-2 max-w-md mx-auto">
+                <input type="email" required placeholder="Tu correo electrónico..." class="flex-1 px-5 py-4 rounded-xl bg-brandBlack text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-brandBlack font-semibold">
+                <button type="submit" class="bg-brandBlack hover:bg-brandGray text-neon font-black px-8 py-4 rounded-xl uppercase tracking-wider transition-all">
+                    UNIRME
+                </button>
+            </form>
+            <p id="newsletter-success" class="hidden text-xs font-black uppercase mt-3 text-brandBlack">¡Te has registrado con éxito! Atento a tu bandeja de entrada.</p>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-brandBlack border-t border-white/10 py-12 px-4 lg:px-12 text-gray-400 text-sm">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+            <div>
+                <span class="font-brand font-black text-3xl tracking-tighter text-neon block mb-4">BONKK.</span>
+                <p class="text-xs leading-relaxed text-gray-400">Nutrición deportiva de alta densidad para ciclistas y atletas de resistencia.</p>
+            </div>
+            <div>
+                <h4 class="font-bold text-white uppercase tracking-wider mb-4">Navegación</h4>
+                <ul class="space-y-2 text-xs">
+                    <li><a href="#catalog" class="hover:text-neon">Geles Energéticos</a></li>
+                    <li><a href="#calculator" class="hover:text-neon">Calculadora de Carbohidratos</a></li>
+                    <li><a href="#science" class="hover:text-neon">Ciencia & Fórmula</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-white uppercase tracking-wider mb-4">Redes</h4>
+                <ul class="space-y-2 text-xs">
+                    <li><a href="https://www.instagram.com/dont_bonkk/?hl=es" target="_blank" class="hover:text-neon"><i class="fa-brands fa-instagram mr-1"></i> Instagram @dont_bonkk</a></li>
+                    <li><a href="#" class="hover:text-neon"><i class="fa-brands fa-strava mr-1"></i> Club en Strava</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-white uppercase tracking-wider mb-4">Atención</h4>
+                <p class="text-xs">soporte@dontbonk.com</p>
+                <p class="text-xs mt-2">Envíos a todo el país.</p>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto pt-6 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center text-xs">
+            <p>© 2026 BONKK®. Todos los derechos reservados. DON'T BONK.</p>
+            <p class="mt-2 sm:mt-0 text-gray-500">Diseñado para alto rendimiento.</p>
+        </div>
+    </footer>
+
+    <!-- CART DRAWER OVERLAY -->
+    <div id="cart-drawer" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden transition-opacity">
+        <div class="absolute right-0 top-0 h-full w-full max-w-md bg-brandGray border-l border-white/10 p-6 flex flex-col justify-between overflow-y-auto">
+            <div>
+                <div class="flex justify-between items-center border-b border-white/10 pb-4 mb-6">
+                    <h3 class="font-brand font-black text-2xl uppercase text-neon flex items-center gap-2">
+                        <i class="fa-solid fa-bag-shopping"></i> Tu Carrito BONKK®
+                    </h3>
+                    <button onclick="toggleCartDrawer()" class="text-gray-400 hover:text-white text-xl">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+
+                <!-- Cart Items Container -->
+                <div id="cart-items" class="space-y-4">
+                    <!-- Dynamic cart items -->
+                </div>
+            </div>
+
+            <!-- Cart Footer Summary -->
+            <div class="border-t border-white/10 pt-4 mt-6">
+                <div class="flex justify-between items-center mb-4">
+                    <span class="text-gray-400 uppercase text-xs font-bold">Total Estándar</span>
+                    <span id="cart-total" class="font-brand font-black text-2xl text-neon">$0.00</span>
+                </div>
+                <button onclick="checkout()" class="w-full bg-neon text-brandBlack font-black uppercase py-4 rounded-xl hover:bg-neon-dark transition-all text-center tracking-wider text-sm">
+                    Finalizar Pedido / Pre-Ordenar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- NUTRITION FACTS MODAL -->
+    <div id="modal-nutrition" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-brandGray border border-white/20 p-6 sm:p-8 rounded-3xl max-w-md w-full relative">
+            <button onclick="closeNutritionModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <h3 class="font-brand font-black text-2xl uppercase text-neon mb-1">TABLA NUTRICIONAL</h3>
+            <p id="modal-product-title" class="text-sm font-bold text-gray-300 mb-6">Gel Energético BONKK® (Sobres de 60g)</p>
+
+            <div class="bg-brandBlack p-4 rounded-xl border border-white/10 font-mono text-xs space-y-2">
+                <div class="flex justify-between font-bold border-b border-white/20 pb-1">
+                    <span>INFORMACIÓN NUTRICIONAL</span>
+                    <span>Por Porción (60g)</span>
+                </div>
+                <div class="flex justify-between">
+                    <span>Valor Energético</span>
+                    <span>180 kcal</span>
+                </div>
+                <div class="flex justify-between">
+                    <span>Carbohidratos Totales</span>
+                    <span class="text-neon font-bold">45.0 g</span>
+                </div>
+                <div class="flex justify-between text-gray-400 pl-3">
+                    <span>- De los cuales azúcares</span>
+                    <span>20.0 g</span>
+                </div>
+                <div class="flex justify-between">
+                    <span>Maltodextrina</span>
+                    <span>25.0 g</span>
+                </div>
+                <div class="flex justify-between">
+                    <span>Fructosa</span>
+                    <span>20.0 g</span>
+                </div>
+                <div class="flex justify-between">
+                    <span>Sodio (Electrolito)</span>
+                    <span>200 mg</span>
+                </div>
+                <div id="modal-caffeine-row" class="flex justify-between text-neon font-bold pt-1 border-t border-white/10">
+                    <span>Cafeína Anhidra</span>
+                    <span id="modal-caffeine-val">0 mg</span>
+                </div>
+            </div>
+
+            <button onclick="closeNutritionModal()" class="w-full mt-6 bg-cardGray border border-white/20 text-white font-bold py-3 rounded-xl hover:border-neon text-xs uppercase">
+                Cerrar Ventana
+            </button>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT APP LOGIC -->
+    <script>
+        // PRODUCTS DATA
+        const products = [
+            {
+                id: 'bonk-lime',
+                name: 'NEON LIME + ELECTROLYTES',
+                sub: 'Refrescante cítrico para días de calor intense',
+                price: 18.00,
+                packSize: 'Pack x 6 geles',
+                carbs: '45g',
+                caffeine: '0mg',
+                color: '#CCFF00',
+                popular: true
+            },
+            {
+                id: 'bonk-espresso',
+                name: 'ESPRESSO CAFFEINE BOOST',
+                sub: 'Sabor café intenso con patada de energía',
+                price: 19.50,
+                packSize: 'Pack x 6 geles',
+                carbs: '45g',
+                caffeine: '100mg',
+                color: '#8B5A2B',
+                popular: false
+            },
+            {
+                id: 'bonk-berry',
+                name: 'WILD BERRY ENDURANCE',
+                sub: 'Frutos del bosque, fácil de digerir',
+                price: 18.00,
+                packSize: 'Pack x 6 geles',
+                carbs: '45g',
+                caffeine: '0mg',
+                color: '#E6005C',
+                popular: false
+            },
+            {
+                id: 'bonk-caramel',
+                name: 'SALTED CARAMEL CARB LOADER',
+                sub: 'Sodio extra con toque dulce/salado',
+                price: 18.50,
+                packSize: 'Pack x 6 geles',
+                carbs: '48g',
+                caffeine: '0mg',
+                color: '#D4A373',
+                popular: false
+            }
+        ];
+
+        let cart = [];
+        let currentIntensity = 'med';
+
+        // INITIALIZE APP
+        document.addEventListener('DOMContentLoaded', () => {
+            renderProducts();
+            updateCalculator();
+            
+            // Slider listener
+            document.getElementById('calc-duration').addEventListener('input', (e) => {
+                document.getElementById('calc-duration-val').textContent = parseFloat(e.target.value).toFixed(1) + ' hrs';
+                updateCalculator();
+            });
+        });
+
+        // RENDER PRODUCTS IN CATALOG GRID
+        function renderProducts() {
+            const grid = document.getElementById('products-grid');
+            grid.innerHTML = products.map(prod => `
+                <div class="bg-brandGray rounded-3xl p-6 border border-white/10 hover:border-neon/60 transition-all flex flex-col justify-between relative group">
+                    ${prod.popular ? `<span class="absolute top-4 right-4 bg-neon text-brandBlack font-black text-[10px] px-3 py-1 rounded-full uppercase">BESTSELLER</span>` : ''}
+
+                    <div>
+                        <!-- Gel Packet Visual Representation -->
+                        <div class="w-full h-48 bg-cardGray rounded-2xl flex items-center justify-center p-4 mb-6 relative overflow-hidden border border-white/5">
+                            <div class="gel-sachet w-24 h-36 bg-brandBlack border-2 border-neon p-2 flex flex-col justify-between items-center text-center shadow-lg">
+                                <span class="font-brand font-black text-neon text-lg tracking-tighter">BONKK.</span>
+                                <div class="w-full h-1 bg-neon my-1"></div>
+                                <span class="text-[9px] font-black text-white uppercase leading-tight">${prod.name}</span>
+                                <span class="text-[8px] text-neon font-bold">${prod.carbs} CARB</span>
+                            </div>
+                        </div>
+
+                        <h3 class="font-brand font-black text-xl uppercase leading-snug mb-1">${prod.name}</h3>
+                        <p class="text-xs text-gray-400 mb-4 line-clamp-2">${prod.sub}</p>
+                        
+                        <div class="flex items-center gap-2 mb-4">
+                            <span class="text-[10px] font-bold uppercase bg-cardGray px-2 py-1 rounded border border-white/10 text-gray-300"><i class="fa-solid fa-wheat-awn text-neon"></i> ${prod.carbs} Carbs</span>
+                            <span class="text-[10px] font-bold uppercase bg-cardGray px-2 py-1 rounded border border-white/10 text-gray-300"><i class="fa-solid fa-bolt text-neon"></i> ${prod.caffeine} Caf</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between items-baseline mb-4">
+                            <span class="text-xs text-gray-400 font-bold">${prod.packSize}</span>
+                            <span class="font-brand font-black text-2xl text-neon">$${prod.price.toFixed(2)}</span>
+                        </div>
+
+                        <div class="grid grid-cols-5 gap-2">
+                            <button onclick="openNutritionModal('${prod.id}')" class="col-span-2 bg-cardGray hover:bg-white/10 text-gray-300 border border-white/20 rounded-xl py-3 text-xs font-bold uppercase transition-colors" title="Ver tabla nutricional">
+                                Tabla
+                            </button>
+                            <button onclick="addToCart('${prod.id}')" class="col-span-3 bg-neon hover:bg-neon-dark text-brandBlack font-black rounded-xl py-3 text-xs uppercase tracking-wider transition-all">
+                                Añadir
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // CALCULATOR LOGIC
+        function setIntensity(int) {
+            currentIntensity = int;
+            document.querySelectorAll('.intensity-btn').forEach(btn => {
+                btn.classList.remove('border-2', 'border-neon', 'bg-neon/10', 'text-neon');
+                btn.classList.add('border-white/20', 'bg-cardGray', 'text-white');
+            });
+
+            const activeBtn = document.getElementById(`btn-int-${int}`);
+            activeBtn.classList.remove('border-white/20', 'bg-cardGray', 'text-white');
+            activeBtn.classList.add('border-2', 'border-neon', 'bg-neon/10', 'text-neon');
+
+            updateCalculator();
+        }
+
+        function updateCalculator() {
+            const duration = parseFloat(document.getElementById('calc-duration').value);
+            let carbsPerHour = 60;
+
+            if (currentIntensity === 'low') carbsPerHour = 45;
+            if (currentIntensity === 'med') carbsPerHour = 65;
+            if (currentIntensity === 'high') carbsPerHour = 90;
+
+            const totalCarbs = duration * carbsPerHour;
+            // Assuming each BONKK gel delivers 45g carbs
+            const gelsNeeded = Math.ceil(totalCarbs / 45);
+
+        }
+
+        function addCalculatedToCart() {
+            const gelsCount = parseInt(document.getElementById('calc-gels-needed').textContent);
+            // Default product is Lime
+            const limeProduct = products[0];
+            
+            for(let i=0; i < gelsCount; i++) {
+                addToCart(limeProduct.id);
+            }
+            toggleCartDrawer();
+        }
+
+        // CART LOGIC
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const existing = cart.find(item => item.id === productId);
+
+            if (existing) {
+                existing.qty++;
+            } else {
+                cart.push({ ...product, qty: 1 });
+            }
+
+            updateCartUI();
+        }
+
+        function updateCartQuantity(id, delta) {
+            const item = cart.find(i => i.id === id);
+            if (item) {
+                item.qty += delta;
+                if (item.qty <= 0) {
+                    cart = cart.filter(i => i.id !== id);
+                }
+            }
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const totalCount = cart.reduce((acc, i) => acc + i.qty, 0);
+            const totalPrice = cart.reduce((acc, i) => acc + (i.price * i.qty), 0);
+
+            document.getElementById('cart-count').textContent = totalCount;
+            document.getElementById('cart-total').textContent = `$${totalPrice.toFixed(2)}`;
+
+            const container = document.getElementById('cart-items');
+            if (cart.length === 0) {
+                container.innerHTML = `<p class="text-gray-400 text-sm text-center py-8">Tu carrito está vacío.<br>Agrega geles para empezar.</p>`;
+                return;
+            }
+
+            container.innerHTML = cart.map(item => `
+                <div class="bg-cardGray p-4 rounded-xl border border-white/10 flex justify-between items-center">
+                    <div>
+                        <h4 class="font-brand font-black text-sm uppercase">${item.name}</h4>
+                        <p class="text-xs text-neon font-bold">$${item.price.toFixed(2)} por pack</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button onclick="updateCartQuantity('${item.id}', -1)" class="w-7 h-7 bg-brandBlack rounded-lg border border-white/20 text-xs font-bold text-gray-300">-</button>
+                        <span class="text-sm font-bold w-4 text-center">${item.qty}</span>
+                        <button onclick="updateCartQuantity('${item.id}', 1)" class="w-7 h-7 bg-brandBlack rounded-lg border border-white/20 text-xs font-bold text-gray-300">+</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function toggleCartDrawer() {
+            const drawer = document.getElementById('cart-drawer');
+            drawer.classList.toggle('hidden');
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                alert('Tu carrito está vacío.');
+                return;
+            }
+            alert('¡Gracias por tu interés en BONKK®! Esta es una versión demo interactiva de la web. Los pedidos se abrirán próximamente.');
+        }
+
+        // NUTRITION MODAL LOGIC
+        function openNutritionModal(id) {
+            const prod = products.find(p => p.id === id);
+            document.getElementById('modal-product-title').textContent = prod.name + " (" + prod.packSize + ")";
+            document.getElementById('modal-caffeine-val').textContent = prod.caffeine;
+            
+            document.getElementById('modal-nutrition').classList.remove('hidden');
+        }
+
+        function closeNutritionModal() {
+            document.getElementById('modal-nutrition').classList.add('hidden');
+        }
+
+        function handleNewsletterSubmit(e) {
+            e.preventDefault();
+            document.getElementById('newsletter-success').classList.remove('hidden');
+            e.target.reset();
+        }
+    </script>
+</body>
+</html>      document.getElementById('calc-gels-needed').textContent = gelsNeeded;
+            document.getElementById('calc-carbs-total').textContent = `~ ${totalCarbs}g de Carbohidratos Totales (${carbsPerHour}g/hora)`;
