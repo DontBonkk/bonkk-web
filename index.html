@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BONKK® | Don't Bonk. Fuel The Ride.</title>
+    <title>BONKK® | Don't Bonkk. Fuel The Ride.</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
@@ -55,10 +55,22 @@
             text-shadow: 0 0 12px rgba(204, 255, 0, 0.5);
         }
 
-        /* Prevent header text truncation/overflow */
+        /* Heading: never split words, never hyphenate */
         .heading-responsive {
-            word-break: break-word;
-            hyphens: auto;
+            word-break: normal;
+            hyphens: none;
+        }
+
+        /* Calculator title: scales with the screen so it fits on ONE line */
+        .calc-title {
+            font-size: clamp(1.5rem, 3.4vw, 2.5rem);
+        }
+
+        /* From tablet up: force a single line. On phones it wraps between words only */
+        @media (min-width: 640px) {
+            .heading-responsive {
+                white-space: nowrap;
+            }
         }
 
         /* Custom scrollbar */
@@ -140,7 +152,7 @@
 
             <!-- Big Main Headline -->
             <h1 class="font-brand font-black text-5xl sm:text-7xl md:text-8xl lg:text-9xl tracking-tighter uppercase leading-[0.88] mb-6">
-                DON'T <span class="text-neon neon-text-glow">BONK.</span><br>
+                DON'T <span class="text-neon neon-text-glow">BONKK.</span><br>
                 FUEL THE RIDE.
             </h1>
 
@@ -197,15 +209,20 @@
     <!-- INTERACTIVE FUEL CALCULATOR -->
     <section id="calculator" class="py-20 px-4 bg-brandGray border-y border-white/10 relative overflow-hidden">
         <div class="max-w-6xl mx-auto">
+
+            <!-- Title row: full width so the heading fits on ONE line -->
+            <div class="mb-10">
+                <span class="bg-neon text-brandBlack px-3 py-1 font-black text-xs tracking-widest uppercase rounded">Herramienta Interactiva</span>
+                <h2 class="calc-title font-brand font-black uppercase tracking-tight mt-4 leading-tight heading-responsive">
+                    CALCULADORA DE NUTRIMENTO
+                </h2>
+            </div>
+
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
                 
                 <div class="lg:col-span-5">
-                    <span class="bg-neon text-brandBlack px-3 py-1 font-black text-xs tracking-widest uppercase rounded">Herramienta Interactiva</span>
-                    <h2 class="font-brand font-black text-3xl sm:text-4xl md:text-5xl uppercase tracking-tight mt-4 leading-tight heading-responsive">
-                        CALCULADORA DE NUTRIMENTO
-                    </h2>
-                    <p class="text-gray-300 mt-4 leading-relaxed text-sm md:text-base">
-                        Evita la pálida ("bonking"). Calcula exactamente la cantidad de gramos de carbohidratos y cuántos geles BONKK® necesitas según la duración y el ritmo de tu ruta.
+                    <p class="text-gray-300 leading-relaxed text-sm md:text-base">
+                        Evita la pájara ("bonking"). Calcula exactamente la cantidad de gramos de carbohidratos y cuántos geles BONKK® necesitas según la duración y el ritmo de tu ruta.
                     </p>
                     <ul class="mt-6 space-y-3 text-sm text-gray-400 font-semibold">
                         <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-neon"></i> Basado en fisiología deportiva real</li>
@@ -402,7 +419,7 @@
         </div>
 
         <div class="max-w-7xl mx-auto pt-6 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center text-xs">
-            <p>© 2026 BONKK®. Todos los derechos reservados. DON'T BONK.</p>
+            <p>© 2026 BONKK®. Todos los derechos reservados. DON'T BONKK.</p>
             <p class="mt-2 sm:mt-0 text-gray-500">Diseñado para alto rendimiento.</p>
         </div>
     </footer>
@@ -554,50 +571,50 @@
 
         // RENDER PRODUCTS
         function renderProducts() {
-            const grid = document.getElementById('products-grid');
-            grid.innerHTML = products.map(prod => `
-                <div class="bg-brandGray rounded-3xl p-6 border border-white/10 hover:border-neon/60 transition-all flex flex-col justify-between relative group">
-                    ${prod.popular ? `<span class="absolute top-4 right-4 bg-neon text-brandBlack font-black text-[10px] px-3 py-1 rounded-full uppercase">BESTSELLER</span>` : ''}
+    const grid = document.getElementById('products-grid');
+    grid.innerHTML = products.map(prod => `
+        <div class="bg-brandGray rounded-3xl p-6 border border-white/10 hover:border-neon/60 transition-all flex flex-col justify-between relative group min-w-0">
+            ${prod.popular ? `<span class="absolute top-3 right-3 z-20 bg-neon text-brandBlack font-black text-[10px] px-3 py-1 rounded-full uppercase shadow-lg">BESTSELLER</span>` : ''}
 
-                    <div>
-                        <div class="w-full h-48 bg-cardGray rounded-2xl flex items-center justify-center p-4 mb-6 relative overflow-hidden border border-white/5">
-                            <div class="gel-sachet w-24 h-36 bg-brandBlack border-2 border-neon p-2 flex flex-col justify-between items-center text-center shadow-lg">
-                                <span class="font-brand font-black text-neon text-lg tracking-tighter">BONKK.</span>
-                                <div class="w-full h-1 bg-neon my-1"></div>
-                                <span class="text-[9px] font-black text-white uppercase leading-tight">${prod.name}</span>
-                                <span class="text-[8px] text-neon font-bold">${prod.carbs} CARB</span>
-                            </div>
-                        </div>
-
-                        <h3 class="font-brand font-black text-xl uppercase leading-snug mb-1">${prod.name}</h3>
-                        <p class="text-xs text-gray-400 mb-4">${prod.sub}</p>
-                        
-                        <div class="flex items-center gap-2 mb-4">
-                            <span class="text-[10px] font-bold uppercase bg-cardGray px-2 py-1 rounded border border-white/10 text-gray-300"><i class="fa-solid fa-wheat-awn text-neon"></i> ${prod.carbs} Carbs</span>
-                            <span class="text-[10px] font-bold uppercase bg-cardGray px-2 py-1 rounded border border-white/10 text-gray-300"><i class="fa-solid fa-bolt text-neon"></i> ${prod.caffeine} Caf</span>
-                        </div>
-                    </div>
-
-                    <div>
-                        <div class="flex justify-between items-baseline mb-4">
-                            <span class="text-xs text-gray-400 font-bold">${prod.packSize}</span>
-                            <span class="font-brand font-black text-2xl text-neon">$${prod.price.toFixed(2)}</span>
-                        </div>
-
-                        <div class="grid grid-cols-5 gap-2">
-                            <button onclick="openNutritionModal('${prod.id}')" class="col-span-2 bg-cardGray hover:bg-white/10 text-gray-300 border border-white/20 rounded-xl py-3 text-xs font-bold uppercase transition-colors" title="Ver tabla nutricional">
-                                Tabla
-                            </button>
-                            <button onclick="addToCart('${prod.id}')" class="col-span-3 bg-neon hover:bg-neon-dark text-brandBlack font-black rounded-xl py-3 text-xs uppercase tracking-wider transition-all">
-                                Añadir
-                            </button>
-                        </div>
+            <div>
+                <div class="w-full h-48 bg-cardGray rounded-2xl flex items-center justify-center p-4 mb-6 relative overflow-hidden border border-white/5">
+                    <div class="gel-sachet w-28 h-40 bg-brandBlack border-2 border-neon px-2 py-3 flex flex-col justify-between items-center text-center shadow-lg">
+                        <span class="font-brand font-black text-neon text-[15px] tracking-tighter whitespace-nowrap">BONKK.</span>
+                        <div class="w-full h-1 bg-neon"></div>
+                        <span class="text-[9px] font-black text-white uppercase leading-tight break-words px-1">${prod.name}</span>
+                        <span class="text-[9px] text-neon font-bold">${prod.carbs} CARB</span>
                     </div>
                 </div>
-            `).join('');
-        }
 
-        // CALCULATOR LOGIC (CORRECTED)
+                <h3 class="font-sans font-black text-xl uppercase leading-tight tracking-tight mb-2 min-h-[3.1rem] break-words">${prod.name}</h3>
+                <p class="text-xs text-gray-400 mb-4 min-h-[2rem]">${prod.sub}</p>
+
+                <div class="flex flex-wrap items-center gap-2 mb-6">
+                    <span class="text-[10px] font-bold uppercase bg-cardGray px-2 py-1 rounded border border-white/10 text-gray-300"><i class="fa-solid fa-wheat-awn text-neon"></i> ${prod.carbs} Carbs</span>
+                    <span class="text-[10px] font-bold uppercase bg-cardGray px-2 py-1 rounded border border-white/10 text-gray-300"><i class="fa-solid fa-bolt text-neon"></i> ${prod.caffeine} Caf</span>
+                </div>
+            </div>
+
+            <div>
+                <div class="flex justify-between items-baseline mb-4">
+                    <span class="text-xs text-gray-400 font-bold">${prod.packSize}</span>
+                    <span class="font-sans font-black text-2xl text-neon tracking-tight">$${prod.price.toFixed(2)}</span>
+                </div>
+
+                <div class="grid grid-cols-5 gap-2">
+                    <button onclick="openNutritionModal('${prod.id}')" class="col-span-2 bg-cardGray hover:bg-white/10 text-gray-300 border border-white/20 rounded-xl py-3 text-xs font-bold uppercase transition-colors" title="Ver tabla nutricional">
+                        Tabla
+                    </button>
+                    <button onclick="addToCart('${prod.id}')" class="col-span-3 bg-neon hover:bg-neon-dark text-brandBlack font-black rounded-xl py-3 text-xs uppercase tracking-wider transition-all">
+                        Añadir
+                    </button>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+        // CALCULATOR LOGIC
         function setIntensity(int) {
             currentIntensity = int;
             
